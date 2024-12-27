@@ -12,11 +12,11 @@ import { TasksComponent } from "./tasks/tasks.component";
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  user = DUMMY_USERS;
-  newId='u1'
+  users = DUMMY_USERS;
+  newId?:string;
 
   get selectedUser(){
-    return this.user.find((user) => user.id === this.newId);
+    return this.users.find((user) => user.id === this.newId);
   }
 
   OnSelectUser(id:string){
