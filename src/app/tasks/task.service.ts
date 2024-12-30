@@ -30,12 +30,20 @@ dummyTasks = [
     },
   ];
 
+  constructor(){
+    const dummyTasks = localStorage.getItem('dummyTasks');
+    if(dummyTasks){
+        this.dummyTasks = JSON.parse(dummyTasks);
+    }
+  }
+
   getSelectedUserTask(userId:string){
     return this.dummyTasks.filter((task) => task.userId===userId);
   }
 
   removeTask(taskId:string){
     this.dummyTasks = this.dummyTasks.filter((task) => task.id!== taskId);
+    this.saveTask();
   }
 
   createNewTask(newTaskDate:NewTask, userId:string){
@@ -45,6 +53,11 @@ dummyTasks = [
         title: newTaskDate.title,
         summary: newTaskDate.summary,
         dueDate: newTaskDate.dueDate
-      })
+      });
+      this.saveTask();
+  }
+
+  private saveTask(){
+    localStorage.setItem('dummyTasks',JSON.stringify(this.dummyTasks));
   }
 }

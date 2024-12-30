@@ -13,8 +13,7 @@ import { TaskService } from '../task.service';
 export class NewTaskComponent {
 
   @Input({required:true}) userId!:string;
-  @Output() cancel = new EventEmitter<void>();
-  @Output() createNewTask = new EventEmitter<NewTask>();
+  @Output() close = new EventEmitter<void>();
 
   entertedTitle='';
   entertedSummary='';
@@ -23,12 +22,13 @@ export class NewTaskComponent {
   private taskService = inject(TaskService)
 
   onCancelTaskCreation(){
-    this.cancel.emit();
+    this.close.emit();
   }
 
   onSubmit(){
     //this.createNewTask.emit({title: this.entertedTitle, summary: this.entertedSummary, dueDate: this.entertedDueDate})
-    this.taskService.createNewTask({title: this.entertedTitle, summary: this.entertedSummary, dueDate: this.entertedDueDate}, this.userId)
+    this.taskService.createNewTask({title: this.entertedTitle, summary: this.entertedSummary, dueDate: this.entertedDueDate}, this.userId);
+    this.close.emit();
   }
 
 }
